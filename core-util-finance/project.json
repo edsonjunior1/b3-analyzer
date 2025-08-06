@@ -1,0 +1,20 @@
+{
+  "name": "core-util-finance",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "core-util-finance/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "core-util-finance/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

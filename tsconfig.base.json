@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@b3-analyzer/core-data-access": ["core-data-access/src/index.ts"],
+      "@b3-analyzer/core-util-finance": ["core-util-finance/src/index.ts"],
+      "@b3-analyzer/features-analyser": ["features-analyser/src/index.ts"],
+      "@b3-analyzer/shared-ui": ["shared-ui/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
