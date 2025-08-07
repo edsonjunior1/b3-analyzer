@@ -1,96 +1,95 @@
-# B3Analyzer
+# B3Analyzer 📈🇧🇷
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+An **Nx mono‑repo** with full‑stack Angular + Nest + RxJS tooling to inspect B3 (Brasil Bolsa Balcão) equities, funds and BDRs from the _Brapi_ public API.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+| Stack | Main libs |
+|-------|-----------|
+| **Frontend** | Angular 17 · RxJS 8 · Angular Material |
+| **Backend**  | NestJS 10 · TypeScript · Axios |
+| **Dev‑Ops**  | Nx · Nx Cloud · Jest · ESLint · Prettier |
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+---
 
-## Run tasks
+## ✨ Quick start
 
-To run tasks with Nx use:
+```bash
+# 1. Install dependencies
+pnpm i              # or yarn / npm
 
-```sh
-npx nx <target> <project-name>
+# 2. Serve everything with HMR
+pnpm nx serve b3-analyzer
 ```
 
-For example:
+The app will be available at **http://localhost:4200**.
 
-```sh
-npx nx build myproject
+---
+
+## ▶️ Typical developer workflow
+
+```bash
+# Lint, test & build affected projects after a commit
+pnpm nx affected -t lint test build
+
+# Visualise the dependency graph
+pnpm nx graph
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+---
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🛠️ Project structure (Nx)
 
-## Add new projects
-
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
+```
+apps/
+  web/                # Angular SPA
+  api/                # NestJS REST/Gateway
+libs/
+  core/data-access/   # Thin wrappers around Brapi endpoints
+  core/util-finance/  # Graham number, DL/EBITDA, etc.
+  ui/*                # Reusable Angular Material components
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+Use `pnpm nx list` to see all available generators, or install **Nx Console** in VS Code for a GUI.
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+---
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
+## 🔌 Brapi API
+
+We rely on the public [`brapi.dev`](https://brapi.dev) endpoints.  
+If you hit the 50 req/min limit, create a free key and add it to:
+
+```bash
+# apps/api/.env
+BRAPI_TOKEN=your‑token‑here
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+---
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🚀 Deployment
 
-## Set up CI!
+| Target | Command |
+|--------|---------|
+| **Docker** | `docker compose up --build` |
+| **Vercel** | Automatic with *vercel.json* |
+| **CI** (GitHub Actions) | `pnpm nx g ci-workflow` |
 
-### Step 1
+Remote caching via **Nx Cloud** is already configured – just run:
 
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
+```bash
+pnpm nx connect
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+---
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## 🤝 Contributing
 
-### Step 2
+1. Fork and clone.
+2. Create a branch: `git checkout -b feat/my-feature`.
+3. Commit with [Conventional Commits](https://www.conventionalcommits.org).
+4. Run `pnpm nx format:write` before pushing.
+5. Open a PR 😊️
 
-Use the following command to configure a CI workflow for your workspace:
+---
 
-```sh
-npx nx g ci-workflow
-```
+## 📜 License
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+MIT © 2025 — _<your name/organisation here>_
