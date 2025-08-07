@@ -1,1 +1,67 @@
-<p>FeaturesAnalyser works!</p>
+<!-- wrapper centralizado -->
+<div class="wrapper" (keydown.enter)="load(tickerCtrl.value)">
+  <form class="analyser-form" (ngSubmit)="load(tickerCtrl.value)">
+    <h2>Análise de Ativos</h2>
+
+    <mat-form-field appearance="outline" class="full">
+      <input
+        type="text"
+        matInput
+        placeholder="Ticker (ex. PETR4)"
+        [formControl]="tickerCtrl"
+        [matAutocomplete]="auto" />
+
+      <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+        @for (s of suggestions(); track s.stock) {
+          <mat-option [value]="s.stock">
+            {{ s.stock }} — {{ s.name }}
+          </mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="full"
+      (click)="search()"
+      [disabled]="loading()">
+      Pesquisar
+    </button>
+  </form>
+
+  @if (loading()) {
+    <div class="spinner"><mat-spinner diameter="48"></mat-spinner></div>
+  }
+
+  @if (quote(); as q) {
+    <mat-card class="result-card" appearance="outlined">
+      <mat-card-title>
+        {{ q.results[0].symbol }}
+        •
+        R${{ q.results[0].regularMarketPrice | number:'1.2-2' }}
+      </mat-card-title>
+
+      <mat-card-content>
+        <p>ROE: <strong>{{ roe() | percent:'1.1-1' }}</strong></p>
+        <p>Dividend Yield:
+           <strong>{{ dy() | percent:'1.1-1' }}</strong></p>
+        <p>Dívida Liq/EBITDA:
+           <strong>{{ dlEbitda() | number:'1.2-2' }}</strong></p>
+        <p>
+          Graham Number:
+          <strong>R$ {{ graham() | number:'1.2-2' }}</strong>
+          <span
+            [style.color]="q.results[0].regularMarketPrice < graham()
+              ? 'green' : 'red'">
+            {{
+              q.results[0].regularMarketPrice < graham()
+                ? '• Preço atrativo'
+                : '• Preço caro'
+            }}
+          </span>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

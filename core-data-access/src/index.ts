@@ -1,1 +1,1 @@
-export * from './lib/core-data-access/core-data-access';
+export * from './lib/brapi-service';

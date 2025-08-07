@@ -49,6 +49,10 @@
     },
     "serve": {
       "continuous": true,
+      "options": {
+        "proxyConfig": "web/proxy.conf.json",
+        "buildTarget": "web:build"
+      },
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
